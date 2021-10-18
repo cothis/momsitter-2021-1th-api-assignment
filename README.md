@@ -96,6 +96,6 @@ DB dump 혹은, 테이블을 생성할 수 있는 쿼리 등의 형태로 제출
 
 ## Contact
 과제 진행 관련하여 궁금하신 사항이 있으시면 언제든지 아래 이메일로 문의 부탁 드립니다.
-채용담당자: [apply.momsitter@mfort.co.kr](mailto:apply.momsitter@mfort.co.kr)
+채용담당자: [apply.back@mfort.co.kr](mailto:apply.back@mfort.co.kr)
 
 **다시 한 번 맘시터에 지원해주시고, 본 과제에 참여해주셔서 진심으로 감사드립니다.**
