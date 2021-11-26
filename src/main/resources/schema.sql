@@ -30,7 +30,8 @@ CREATE TABLE `parent` (
 CREATE TABLE `children` (
                             `no` bigint PRIMARY KEY AUTO_INCREMENT,
                             `parent_no` bigint UNIQUE NOT NULL,
-                            `birthday` datetime NOT NULL
+                            `birthday` datetime NOT NULL,
+                            `gender` varchar(5) NOT NULL
 );
 
 ALTER TABLE `sitter` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
