@@ -48,15 +48,11 @@ public class JdbcChildrenRepository implements ChildrenRepository {
 	}
 
 	@Override
-	public void update(Long parentNo, List<ChildrenDto> children) {
-		for (ChildrenDto child : children) {
-			jdbcTemplate.update(
-				"UPDATE `children` SET `birthday` = ?, `gender` = ? WHERE `no` = ?",
-				child.getBirthday(),
-				child.getGender(),
-				parentNo
-			);
-		}
+	public void delete(Long parentNo) {
+		jdbcTemplate.update(
+			"DELETE FROM `children` WHERE `parent_no` = ?",
+			parentNo
+		);
 	}
 
 	private final RowMapper<Children> MAPPER = (rs, rowNum) ->

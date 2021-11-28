@@ -87,13 +87,6 @@ public class UserService {
 			createParent(currentUser);
 		} else {
 			currentUser.getParent().setNo(oldUser.getParent().getNo());
-			List<ChildrenDto> children = oldUser.getParent().getChildren();
-			List<ChildrenDto> currentChildren = currentUser.getParent().getChildren();
-			for (int i = 0; i < children.size(); i++) {
-				ChildrenDto child = children.get(i);
-				ChildrenDto currentChild = currentChildren.get(i);
-				currentChild.setNo(child.getNo());
-			}
 			updateParent(currentUser);
 		}
 	}
@@ -102,7 +95,8 @@ public class UserService {
 		ParentDto parent = userDto.getParent();
 		if (parent != null) {
 			parentRepository.update(parent);
-			childrenRepository.update(parent.getNo(), parent.getChildren());
+			childrenRepository.delete(parent.getNo());
+			childrenRepository.create(parent.getNo(), parent.getChildren());
 		}
 	}
 

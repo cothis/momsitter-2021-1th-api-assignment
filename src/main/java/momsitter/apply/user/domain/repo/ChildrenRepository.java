@@ -10,5 +10,5 @@ public interface ChildrenRepository {
 
 	void create(Long parentNo, List<ChildrenDto> children);
 
-	void update(Long parentNo, List<ChildrenDto> children);
+	void delete(Long parentNo);
 }
