@@ -3,6 +3,10 @@ package momsitter.apply.user.api.dto;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,6 +38,9 @@ public class UserDto {
 
 	private String id;
 
+	@NotBlank(message = "비밀번호는 필수 입력값입니다.")
+	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
+		message = "비밀번호는 영문 대,소문자와 숫자, 특수문자가 적어도 1개 이상 포함된 8 ~ 20자 문자열이어야 합니다.")
 	private String password;
 
 	private String email;

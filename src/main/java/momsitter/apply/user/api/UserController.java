@@ -1,6 +1,7 @@
 package momsitter.apply.user.api;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,8 @@ public class UserController {
 	private final UserService userService;
 
 	@PostMapping
-	public ResponseEntity<UserDto> join(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> join(@Valid @RequestBody UserDto userDto) {
 		userService.join(userDto);
-
 		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
 
