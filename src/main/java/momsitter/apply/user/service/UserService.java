@@ -66,7 +66,9 @@ public class UserService {
 	@Transactional
 	public void update(UserDto userDto) {
 		UserDto oldUser = findById(userDto.getId());
-		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		if (userDto.getPassword() != null) {
+			userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		}
 		userRepository.update(userDto);
 
 		mergeSitter(oldUser, userDto);
