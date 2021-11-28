@@ -6,6 +6,8 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,13 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<UserDto> join(@Valid @RequestBody UserDto userDto) {
 		userService.join(userDto);
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
+	}
+
+	@PatchMapping("{userNo}")
+	public ResponseEntity<UserDto> updateInformation(@Valid @RequestBody UserDto userDto, @PathVariable Long userNo) {
+		userDto.setNo(userNo);
+		userService.update(userDto);
 		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
 

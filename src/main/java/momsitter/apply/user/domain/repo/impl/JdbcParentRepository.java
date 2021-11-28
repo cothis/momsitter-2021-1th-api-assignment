@@ -45,6 +45,15 @@ public class JdbcParentRepository implements ParentRepository {
 		return Optional.ofNullable(parents.isEmpty() ? null : parents.get(0));
 	}
 
+	@Override
+	public void update(ParentDto parent) {
+		jdbcTemplate.update(
+			"UPDATE `parent` SET `request_msg`=? WHERE `no` = ?",
+			parent.getRequestMessage(),
+			parent.getNo()
+		);
+	}
+
 	private static final RowMapper<Parent> MAPPER = (rs, rowNum) ->
 		Parent.builder()
 			.no(rs.getLong("no"))

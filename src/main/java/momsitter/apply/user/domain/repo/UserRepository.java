@@ -12,4 +12,6 @@ public interface UserRepository {
 	Optional<User> login(String id, String password);
 
 	void create(UserDto userDto);
+
+	void update(UserDto userDto);
 }

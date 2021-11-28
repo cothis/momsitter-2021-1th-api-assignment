@@ -47,6 +47,18 @@ public class JdbcChildrenRepository implements ChildrenRepository {
 		);
 	}
 
+	@Override
+	public void update(Long parentNo, List<ChildrenDto> children) {
+		for (ChildrenDto child : children) {
+			jdbcTemplate.update(
+				"UPDATE `children` SET `birthday` = ?, `gender` = ? WHERE `no` = ?",
+				child.getBirthday(),
+				child.getGender(),
+				parentNo
+			);
+		}
+	}
+
 	private final RowMapper<Children> MAPPER = (rs, rowNum) ->
 		Children.builder()
 			.no(rs.getLong("no"))

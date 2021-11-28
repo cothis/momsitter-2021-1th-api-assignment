@@ -48,6 +48,17 @@ public class JdbcSitterRepository implements SitterRepository {
 		sitter.setNo(number.longValue());
 	}
 
+	@Override
+	public void update(SitterDto sitter) {
+		jdbcTemplate.update(
+			"UPDATE SITTER SET INTRO_MSG=?, CARE_FROM=?, CARE_TO=? WHERE NO = ?",
+			sitter.getIntroMessage(),
+			sitter.getCareFrom(),
+			sitter.getCareTo(),
+			sitter.getNo()
+		);
+	}
+
 	private static final RowMapper<Sitter> MAPPER = (rs, rowNum) ->
 		Sitter.builder()
 			.no(rs.getLong("no"))

@@ -9,4 +9,6 @@ public interface ChildrenRepository {
 	List<Children> findByParentNo(Long parentNo);
 
 	void create(Long parentNo, List<ChildrenDto> children);
+
+	void update(Long parentNo, List<ChildrenDto> children);
 }

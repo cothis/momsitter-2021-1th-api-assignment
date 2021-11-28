@@ -9,4 +9,6 @@ public interface ParentRepository {
 	Optional<Parent> findByUserId(String userId);
 
 	void create(ParentDto parent);
+
+	void update(ParentDto parent);
 }

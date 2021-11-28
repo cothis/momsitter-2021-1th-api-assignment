@@ -9,4 +9,6 @@ public interface SitterRepository {
 	Optional<Sitter> findByUserId(String userId);
 
 	void create(SitterDto sitter);
+
+	void update(SitterDto sitter);
 }

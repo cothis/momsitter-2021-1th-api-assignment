@@ -1,5 +1,6 @@
 package momsitter.apply.user.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.security.auth.login.FailedLoginException;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import momsitter.apply.exceptions.NotFoundException;
+import momsitter.apply.user.api.dto.ChildrenDto;
 import momsitter.apply.user.api.dto.ParentDto;
 import momsitter.apply.user.api.dto.SitterDto;
 import momsitter.apply.user.api.dto.UserDto;
@@ -59,6 +61,56 @@ public class UserService {
 
 		createSitter(userDto);
 		createParent(userDto);
+	}
+
+	@Transactional
+	public void update(UserDto userDto) {
+		UserDto oldUser = findById(userDto.getId());
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		userRepository.update(userDto);
+
+		mergeSitter(oldUser, userDto);
+		mergeParent(oldUser, userDto);
+	}
+
+	private void mergeSitter(UserDto oldUser, UserDto currentUser) {
+		if (oldUser.getSitter() == null) {
+			createSitter(currentUser);
+		} else {
+			currentUser.getSitter().setNo(oldUser.getSitter().getNo());
+			updateSitter(currentUser);
+		}
+	}
+
+	private void mergeParent(UserDto oldUser, UserDto currentUser) {
+		if (oldUser.getParent() == null) {
+			createParent(currentUser);
+		} else {
+			currentUser.getParent().setNo(oldUser.getParent().getNo());
+			List<ChildrenDto> children = oldUser.getParent().getChildren();
+			List<ChildrenDto> currentChildren = currentUser.getParent().getChildren();
+			for (int i = 0; i < children.size(); i++) {
+				ChildrenDto child = children.get(i);
+				ChildrenDto currentChild = currentChildren.get(i);
+				currentChild.setNo(child.getNo());
+			}
+			updateParent(currentUser);
+		}
+	}
+
+	private void updateParent(UserDto userDto) {
+		ParentDto parent = userDto.getParent();
+		if (parent != null) {
+			parentRepository.update(parent);
+			childrenRepository.update(parent.getNo(), parent.getChildren());
+		}
+	}
+
+	private void updateSitter(UserDto userDto) {
+		SitterDto sitter = userDto.getSitter();
+		if (sitter != null) {
+			sitterRepository.update(sitter);
+		}
 	}
 
 	private void createSitter(UserDto userDto) {

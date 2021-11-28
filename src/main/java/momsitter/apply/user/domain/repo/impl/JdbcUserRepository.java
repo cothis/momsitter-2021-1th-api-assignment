@@ -61,6 +61,20 @@ public class JdbcUserRepository implements UserRepository {
 		userDto.setNo(number.longValue());
 	}
 
+	@Override
+	public void update(UserDto userDto) {
+		jdbcTemplate.update(
+			"UPDATE USER SET NAME=?, BIRTHDAY=?, GENDER=?,ID=?,PASSWORD=?,EMAIL=? WHERE NO=?",
+			userDto.getName(),
+			DateTimeUtil.timestampOf(userDto.getBirthday()),
+			userDto.getGender(),
+			userDto.getId(),
+			userDto.getPassword(),
+			userDto.getEmail(),
+			userDto.getNo()
+		);
+	}
+
 	private static final RowMapper<User> MAPPER = (rs, rowNum) ->
 		User.builder()
 			.no(rs.getLong("no"))
